@@ -87,6 +87,14 @@
     </section>
   </main>
 
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+<script>
+  window.TrackJS && TrackJS.install({ 
+    token: "bf01a1099261410d93dca2532f444819"
+    // for more configuration options, see https://docs.trackjs.com
+  });
+</script>
+                        
   <script>
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
@@ -95,13 +103,124 @@
       let firstNum = document.querySelector('#first-num').value;
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
+      
+    //Step 3 - Trying Try/Catch
+    try {
       output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+    } catch(error) {
+      console.error('Error: Not a vaild input! First and second input must be a vaild number!');
+    } finally {
+      console.log('Check Finished')
+    }
     });
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
     // Start your code here
     // You may move this JS to another file if you wish
+
+    //Step 2 - Adding Buttons for Console Testing
+    errorBtns[0].addEventListener('click', () => {
+      console.log('Console Log');
+    });
+
+    errorBtns[1].addEventListener('click', () => {
+      console.error('Console Error');
+    });
+
+    errorBtns[2].addEventListener('click', () => {
+      console.count('Count');
+    });
+
+    errorBtns[3].addEventListener('click', () => {
+      console.warn('Warn');
+    });
+
+    errorBtns[4].addEventListener('click', () => {
+      const a = 10;
+      const b = 3;
+      const reason = 'a is expected to equal to b';
+      console.assert(a == b, {a, b, reason});
+    });
+
+    errorBtns[5].addEventListener('click', () => {
+      console.clear();
+    });
+
+    errorBtns[6].addEventListener('click', () => {
+      console.dir(document.head);
+    });
+
+    errorBtns[7].addEventListener('click', () => {
+      console.dirxml(document);
+    });
+
+    const label = 'Console Group';
+    errorBtns[8].addEventListener('click', () => {
+      console.group(label);
+      console.info('You');
+      console.info('I');
+      console.info('They');
+    });
+
+    errorBtns[9].addEventListener('click', () => {
+      console.groupEnd(label);
+      console.log('Group End')
+    });
+
+    errorBtns[10].addEventListener('click', () => {
+      console.table([
+        {
+          state: 'Arizona',
+        },
+        {
+          state: 'California',
+        },
+        {
+          state: 'Hawaii',
+        }
+      ]);
+    });
+
+    errorBtns[11].addEventListener('click', () => {
+      console.time();
+      console.log('Timer starts')
+    });
+
+    errorBtns[12].addEventListener('click', () => {
+      console.timeEnd();
+      console.log('Timer Ends')
+    });
+
+    errorBtns[13].addEventListener('click', () => {
+      const first = () => { second(); };
+      const second = () => { third(); };
+      const third = () => { fourth(); };
+      const fourth = () => { console.trace(); };
+      first();
+    });
+
+    errorBtns[14].addEventListener('click', () => {
+      let s = 'I do not want to do my homework.';
+      s = 'You must do your own homework!!!!';
+    });
+
+    //Step 4 - Throw and Custom Errors
+    class myErr extends Error{
+      constructor(message){
+      super(message);
+      this.name = 'Custom Errors';
+      }
+    }
+
+    try{
+      throw new myErr('My Error found!')
+    }catch(error){
+      console.error(error);
+    }
+
+    //Step 5 - The Global Error handler and 3rd Party Tracking
+    TrackJS.track('Testing TrackJS!');
   </script>
 </body>
 
